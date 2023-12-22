@@ -5,6 +5,9 @@ import {
   WebGLRenderer,
   AmbientLight,
   Clock,
+  BoxGeometry,
+  MeshBasicMaterial,
+  Mesh,
 } from "three";
 
 let camera, controls, scene, renderer, mixer, clock;
@@ -29,7 +32,14 @@ function init() {
 
   camera = new PerspectiveCamera(fov, aspect, near, far);
 
-  camera.position.set(0, 0, -75);
+  camera.position.set(10, 5, 30);
+  const geometry = new BoxGeometry(1, 1, 1);
+
+  const material = new MeshBasicMaterial();
+
+  const cube = new Mesh(geometry, material);
+
+  scene.add(cube);
 
   renderer = new WebGLRenderer();
 
