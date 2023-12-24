@@ -1,9 +1,7 @@
 import {
-  Color,
   PerspectiveCamera,
   Scene,
   WebGLRenderer,
-  AmbientLight,
   Clock,
   BoxGeometry,
   MeshBasicMaterial,
@@ -11,16 +9,15 @@ import {
 } from "three";
 
 import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 let camera, scene, renderer, clock;
 let params = {
   snowfall: 10,
 };
 
-const particleNum = 10000;
 const maxRange = 1000;
 const minRange = maxRange / 2;
-const textureSize = 64.0;
 
 const container = document.querySelector("#scene-container");
 
@@ -156,6 +153,7 @@ function init() {
   const cube = new Mesh(geometry, material);
 
   scene.add(cube);
+  loadModel();
 
   renderer = new WebGLRenderer({
     antialias: true,
@@ -204,4 +202,20 @@ function onWindowResize() {
 function render() {
   renderer.render(scene, camera);
   requestAnimationFrame(render);
+}
+
+function loadModel() {
+  const loader = new GLTFLoader();
+  loader.load(
+    "assets/santa_sleigh_reindeer.glb",
+    function (gltf) {
+      gltf.scene.rotation.set(0, 0, 0);
+      gltf.scene.scale.set(5, 5, 5);
+      scene.add(gltf.scene);
+    },
+    undefined,
+    function (error) {
+      console.error(error);
+    }
+  );
 }
