@@ -118,7 +118,7 @@ class SnowFlakes extends THREE.Object3D {
         this.remove(this.snowList[i]);
         this.snowList.splice(i, 1);
         i -= 1;
-        console.log(this.snowList.length);
+        //console.log(this.snowList.length);
       }
     }
   }
@@ -209,13 +209,19 @@ function loadModel() {
   loader.load(
     "assets/santa_sleigh_reindeer.glb",
     function (gltf) {
+      const model = gltf.scene;
       gltf.scene.rotation.set(0, 0, 0);
       gltf.scene.scale.set(5, 5, 5);
       scene.add(gltf.scene);
+      model.rotation.x += degToRad(180);
     },
     undefined,
     function (error) {
       console.error(error);
     }
   );
+}
+
+function degToRad(deg) {
+  return (deg * Math.PI) / 180;
 }
